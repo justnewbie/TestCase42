@@ -1,0 +1,20 @@
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% get_static_prefix %}bootstrap.css" type="text/css" media="all" />
+        {% block head %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{% block main_page %}#{% endblock %}">My Profile {{ setings.LANGUAGE_CODE }}</a>
+                </div>
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

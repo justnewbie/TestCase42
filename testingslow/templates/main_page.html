@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}View - My profile{% endblock %}
+{% block head %}<meta name="description" content="Main Page" />{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="hero-unit">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="container-fluid">
+                        <div class="span7">
+                            <h3>First name</h3>
+                            <p>{{ My.first_name }}</p>
+                        </div>
+                        <div class="span7">
+                            <h4>Last name</h4>
+                            <p>{{ My.last_name }}</p>
+                        </div>
+                        <div class="span7">
+                            <h4>Birth date</h4>
+                            <p>{{ My.b_date }}</p>
+                        </div>
+                        <div class="span7">
+                            <h4>About me</h4>
+                            <p>{{ My.about }}</p>
+                        </div>
+                        <div class="span7">
+                            <h4>Jabber</h4>
+                            <p>{{ My.jabber }}</p>
+                        </div>
+                        <div class="span7">
+                            <h4>Jabber</h4>
+                            <p>{{ My.email }}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

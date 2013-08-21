@@ -1,0 +1,26 @@
+[
+    {
+        "pk": 1,
+        "model": "testapp.person",
+        "fields": {
+            "first_name": "Dmitry",
+            "last_name": "Firsov",
+            "about": "Studing programming",
+            "b_date": "1989-03-07",
+            "jabber": "chen@khavr.com",
+            "email": "JustNew@i.ua"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "admin",
+            "is_staff": true,
+            "is_active": true,
+            "is_superuser": true,
+            "password": "pbkdf2_sha256$10000$QvD0x5ddELRP$efJNYv9vvoPjnYg7b2W+1xjBd8ckGA+Aae3d0N62frU=",
+            "email": "JustNew@i.ua"
+        }
+    }
+]
