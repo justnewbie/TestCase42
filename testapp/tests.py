@@ -6,16 +6,19 @@ Replace this with more appropriate tests for your application.
 """
 
 import datetime
-from django.test import TestCase
-from django.test import Client
+from django.test import TestCase, Client
+from django.test.client import RequestFactory
 from django.contrib.auth.models import User
+from django.template import Template
+from django.template import Context
 from models import Person, Hook_http
+from testingslow import settings
 
 
 class JsonDataTest(TestCase):
     def test_json_data(self):
-        print('User "{0}" and profile "{1}" was  successfully CREATED;'.format(
-            User.objects.get(pk=1), Person.objects.get(pk=1)))
+        print('User "{0}" and profile "{1}" was  successfully CREATED;'.format(User.objects.get(pk=1),
+                                                                               Person.objects.get(pk=1)))
 
 
 class ViewsTest(TestCase):
@@ -44,3 +47,9 @@ class MiddlewareTest(TestCase):
         c = Client()
         response = c.get('/')
         print('Request to "{0}" is successfully SAVED;'.format(Hook_http.objects.get(pk=1)))
+
+
+class ContextProcessorTest(TestCase):
+    def test_settings_processor(self):
+        c = Client()
+        self.assertEquals(c.get('/').context['settings'].ROOT_URLCONF, settings.ROOT_URLCONF)
