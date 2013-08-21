@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'testingslow.views.home', name='home'),
     # url(r'^testingslow/', include('testingslow.foo.urls')),
     url(r'^$', 'testapp.views.about_p', name='Main_Page'),
+    url(r'^hooks/', 'testapp.views.list_hooks', name='http_loggs_list'),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

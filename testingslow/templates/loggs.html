@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Last requests{% endblock %}
+{% block head %}<meta name="description" content="Last requests" />{% endblock %}
+{% block main_page %}http://{{ request.get_host }}{% endblock %}
+{% block hooks %}{{ request.build_absolute_uri }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="hero-unit">
+            <p><h3>First 10 http requests</h3></p>
+            {% for hook in hooks %}
+                <p>{{ hook.pk }}-{{ hook.http_request }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
