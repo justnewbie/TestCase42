@@ -11,7 +11,7 @@ from django.test.client import RequestFactory
 from django.contrib.auth.models import User
 from django.template import Template
 from django.template import Context
-from models import Person, Hook_http
+from models import Person, Hook_http, Loggs
 from testingslow import settings
 
 
@@ -104,3 +104,17 @@ class AdminTagTest(TestCase):
         c = Client()
         c.post('/login/', {'username': 'admin', 'password': 'admin'})
         self.assertContains(c.get('/'), '/admin/testapp/person/1/')
+
+class ModelsTest(TestCase):
+    def test_signals(self):
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Person Created")
+        Person.objects.get(pk=1).save()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Person Modified")
+        Person.objects.get(pk=1).delete()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Person Delete")
+        Hook_http(http_request="http://testserver/").save()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Hook_http Created")
+        Hook_http.objects.get(pk=1).save()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Hook_http Modified")
+        Hook_http.objects.get(pk=1).delete()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "Hook_http Delete")
