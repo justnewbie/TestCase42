@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}<meta name="description" content="Manage Main Page" />{% endblock %}
+{% block title %}Manage my profile{% endblock %}
+{% block main_page %}http://{{ request.get_host }}{% endblock %}
+{% block manage_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block hooks %}http://{{ request.get_host }}/hooks/{% endblock %}
+{% block content %}
+<div class="container">
+        <div class="hero-unit">
+            <img src="{{ settings.MEDIA_URL }}{{ form.photography.value }}" height="400" width="300">
+            {% include "form.html" with url="" id="myform" form_name="Manage my profile" form_button="Save" enctype="multipart/form-data" %}
+        </div>
+</div>
+{% endblock %}

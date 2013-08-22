@@ -8,6 +8,7 @@ class Person(models.Model):
     about = models.CharField(max_length=500)
     email = models.EmailField(max_length=50, blank=True, unique=True)
     jabber = models.CharField(max_length=20)
+    photography = models.ImageField(upload_to="images")
 
     def __unicode__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)

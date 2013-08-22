@@ -11,6 +11,7 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="brand" href="{% block main_page %}#{% endblock %}">My Profile</a>
+                    {% block manage_person %}<a class="brand" href="{% block manage_url %}manage/?person={% block PK %}{% endblock %}{% endblock %}">Manage profile</a>{% endblock %}
                     <a class="brand" href="{% block hooks %}hooks/{% endblock %}">Middleware loggs</a>
                 </div>
             </div>

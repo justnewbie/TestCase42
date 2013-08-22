@@ -26,6 +26,13 @@ class ViewsTest(TestCase):
         c = Client()
         response = c.get('/')
         self.assertContains(response, '<meta name="description" content="Main Page" />')
+        #testing auth form
+        self.assertContains(response, 'Login form')
+        self.assertNotContains(response, '<p>You are logged in...</p>')
+        c.post('/login/', {'username': 'admin', 'password': 'admin'})
+        response = c.get('/')
+        self.assertContains(response, '<p>You are logged in...</p>')
+        self.assertNotContains(response, 'Login form')
 
     def test_hooks_page(self):
         c = Client()
@@ -33,12 +40,35 @@ class ViewsTest(TestCase):
         self.assertContains(response, '<meta name="description" content="Last requests" />')
         self.assertContains(response, 'http://testserver/')
 
+    def test_manage_page(self):
+        c = Client()
+        # testing login required
+        response = c.get('/manage/?person=1')
+        self.assertEqual(response.status_code, 302)
+        # testing login view
+        response = c.post('/login/', {'username': 'admin', 'password': 'admin'})
+        # testing manage view
+        response = c.get('/manage/?person=1')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<meta name="description" content="Manage Main Page" />')
+        with open(settings.MEDIA_ROOT+'/images/test.jpg') as fp:
+            response = c.post('/manage/?person=1', {'first_name': 'Lara', 'last_name': 'Croft',
+                                                    'b_date': datetime.datetime.now().date(),
+                                                    'about': 'I am the tomb rider', 'jabber': 'L_Croft',
+                                                    'email': 'Croft@i.ua',
+                                                    'photography': fp})
+            self.assertContains(response, 'Data saved')
+        # testing logout view
+        response = c.post('/loggout/')
+        response = c.get('/manage/?person=1')
+        self.assertEqual(response.status_code, 302)
+
 
 class ModelsTest(TestCase):
     def test_models(self):
         Person(first_name="Lara", last_name="Croft", about="I am the TOMB RIDER",
                b_date=datetime.datetime.now().date(), jabber="TombRider@world.m",
-               email="TombRider@world.m").save()
+               email="TombRider@world.m", photography='images/test.jpg').save()
         Hook_http(http_request="http://testserver/").save()
 
 

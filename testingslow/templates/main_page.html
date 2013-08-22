@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}View - My profile{% endblock %}
 {% block head %}<meta name="description" content="Main Page" />{% endblock %}
+{% block PK %}{{ My.pk }}{% endblock %}
 {% block content %}
 <div class="container">
     <div class="hero-unit">
@@ -12,6 +13,11 @@
             </thead>
             <tbody>
             <tr>
+                <td>
+                    <div>
+                        <img height="400" src="{{ settings.MEDIA_URL }}{{ My.photography }}" width="300" />
+                    </div>
+                </td>
                 <td>
                     <div class="container-fluid">
                         <div class="span7">
@@ -47,6 +53,12 @@
             </tr>
             </tbody>
         </table>
+        {% if user.is_authenticated %}
+            <p>You are logged in...</p>
+            <a href='/loggout/'><button class="btn btn-large btn-primary" type="submit">LogOut</button></a>
+        {% else %}
+            {% include "form.html" with url="/login/" form_name="Login form" form_button="login" encrypte=''%}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
