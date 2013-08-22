@@ -83,3 +83,17 @@ class ContextProcessorTest(TestCase):
     def test_settings_processor(self):
         c = Client()
         self.assertEquals(c.get('/').context['settings'].ROOT_URLCONF, settings.ROOT_URLCONF)
+
+
+class DateWidgetTest(TestCase):
+    def test_date_widget(self):
+        c = Client()
+        c.post('/login/', {'username': 'admin', 'password': 'admin'})
+        response = c.get('/manage/?person=1')
+        self.assertContains(response, """<script>
+            $(function() {
+                var pickerOpts = {
+                    dateFormat: "yy-mm-dd",
+                    showOtherMonths: true}
+                $(".datepicker").datepicker(pickerOpts);
+            });</script>""")

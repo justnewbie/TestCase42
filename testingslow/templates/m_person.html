@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block head %}<meta name="description" content="Manage Main Page" />{% endblock %}
+{% block head %}
+    <meta name="description" content="Manage Main Page" />
+    <link rel="stylesheet" href="{% get_static_prefix %}bar.css" type="text/css" media="all" />
+{% endblock %}
 {% block title %}Manage my profile{% endblock %}
 {% block main_page %}http://{{ request.get_host }}{% endblock %}
 {% block manage_url %}{{ request.build_absolute_uri }}{% endblock %}
@@ -10,6 +13,13 @@
         <div class="hero-unit">
             <img src="{{ settings.MEDIA_URL }}{{ form.photography.value }}" height="400" width="300">
             {% include "form.html" with url="" id="myform" form_name="Manage my profile" form_button="Save" enctype="multipart/form-data" %}
+            <div class="progressC">
+                <div class="barC"></div >
+                <div class="percentC">0%</div >
+            </div>
+            <div id="statusC"></div>
+            <script src="{% get_static_prefix %}jquery.form.js"></script>
+            <script src="{% get_static_prefix %}ajax_upload.js"></script>
         </div>
 </div>
 {% endblock %}

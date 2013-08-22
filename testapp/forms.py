@@ -1,6 +1,7 @@
 from django import forms
 from models import Person
 from django.forms import ModelForm
+from widgets import DatePickerWidget
 
 
 class AuthForm(forms.Form):
@@ -9,7 +10,7 @@ class AuthForm(forms.Form):
 
 
 class Add_Person(ModelForm):
-    b_date = forms.DateField()
+    b_date = forms.DateField(widget=DatePickerWidget())
 
     class Meta:
         model = Person
