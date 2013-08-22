@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load admin_link %}
 {% block title %}View - My profile{% endblock %}
 {% block head %}<meta name="description" content="Main Page" />{% endblock %}
 {% block PK %}{{ My.pk }}{% endblock %}
@@ -44,6 +45,12 @@
                             <h4>Jabber</h4>
                             <p>{{ My.email }}</p>
                         </div>
+                        {% if user.is_authenticated %}
+                        <div class="span7">
+                            <h4>Admin page link</h4>
+                            <p><a href='{% admin_link My %}'>Link to edit profile in admin page "{{ My.first_name }}"</a></p>
+                        </div>
+                        {% endif %}
                         <div class="span7">
                             <h4>template-context-processor</h4>
                             <p>{{ settings }}</p>

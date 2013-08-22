@@ -97,3 +97,10 @@ class DateWidgetTest(TestCase):
                     showOtherMonths: true}
                 $(".datepicker").datepicker(pickerOpts);
             });</script>""")
+
+
+class AdminTagTest(TestCase):
+    def test_admin_tag(self):
+        c = Client()
+        c.post('/login/', {'username': 'admin', 'password': 'admin'})
+        self.assertContains(c.get('/'), '/admin/testapp/person/1/')
