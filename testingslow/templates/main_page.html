@@ -4,49 +4,50 @@
 {% block content %}
 <div class="container">
     <div class="hero-unit">
+        <div class="container-fluid">
+            <div class="span7">
+                <h4>42 Coffee Cups Test Assignment</h4>
+            </div>
+        </div>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Profile</th>
-                </tr>
             </thead>
             <tbody>
             <tr>
                 <td>
                     <div class="container-fluid">
-                        <div class="span7">
-                            <h3>First name</h3>
-                            <p>{{ My.first_name }}</p>
+                        <div class="span4">
+                            <p>Name: {{ My.first_name }}</p>
                         </div>
-                        <div class="span7">
-                            <h4>Last name</h4>
-                            <p>{{ My.last_name }}</p>
+                        <div class="span4">
+                            <p>Last name: {{ My.last_name }}</p>
                         </div>
-                        <div class="span7">
-                            <h4>Birth date</h4>
-                            <p>{{ My.b_date }}</p>
+                        <div class="span4">
+                            <p>Date of birth: {{ My.b_date }}</p>
                         </div>
-                        <div class="span7">
-                            <h4>About me</h4>
+                        <div class="span4">
+                            <p>Bio:</p>
                             <p>{{ My.about }}</p>
                         </div>
-                        <div class="span7">
-                            <h4>Jabber</h4>
-                            <p>{{ My.jabber }}</p>
+                    <div>
+                </td>
+                <td>
+                    <div class="container-fluid">
+                        <div class="span4">
+                            <p>Contacts</p>
                         </div>
-                        <div class="span7">
-                            <h4>Jabber</h4>
-                            <p>{{ My.email }}</p>
+                        <div class="span4">
+                            <p>Email: {{ My.email }}</p>
                         </div>
-                        <div class="span7">
-                            <h4>template-context-processor</h4>
-                            <p>{{ settings }}</p>
+                        <div class="span4">
+                            <p>Jabber: {{ My.jabber }}</p>
                         </div>
-                    </div>
+                    <div>
                 </td>
             </tr>
             </tbody>
         </table>
+        <a class="brand" href="{% block hooks %}requests/{% endblock %}">Middleware loggs</a>
     </div>
 </div>
 {% endblock %}
