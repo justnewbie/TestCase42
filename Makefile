@@ -1,5 +1,5 @@
 test:
-	python $(PWD)/manage.py test	
+	python $(PWD)/manage.py test testapp
 run:
 	python $(PWD)/manage.py runserver
 syncdb:
