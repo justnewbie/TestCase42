@@ -3,9 +3,10 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
+from django.template import RequestContext
 from middlewares import RequestSaverMiddleware
 from models import Person, RequestLogs
-
+from testingslow import settings
 
 class JsonDataTest(TestCase):
     def test_json_data(self):
@@ -48,3 +49,9 @@ class MiddlewareTest(TestCase):
             RequestFactory().get(reverse('http_loggs_list')))
         self.assertEqual(reverse('http_loggs_list'),
                          RequestLogs.objects.get(pk=1).url)
+
+class ContextProcessorTest(TestCase):
+    def test_settings_processor(self):
+        self.assertEqual(RequestContext(RequestFactory)['settings'], settings)
+        self.assertTrue('testapp.context_processors.settings_processor'
+                        in settings.TEMPLATE_CONTEXT_PROCESSORS)
