@@ -15,11 +15,12 @@ class JsonDataTest(TestCase):
 
 class ViewsTest(TestCase):
     def test_main_page(self):
+        response = self.client.get(reverse('main_page'))
         for field in Person._meta.fields:
             if field.name == 'id' or field.name == 'b_date':
                 pass
             else:
-                self.assertContains(self.client.get(reverse('main_page')),
+                self.assertContains(response,
                                     field.value_from_object(
                                         Person.objects.get(pk=1)))
 

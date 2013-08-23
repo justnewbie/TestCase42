@@ -1,9 +1,7 @@
-MANAGE=django-admin.py
-
 test:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testingslow.settings $(MANAGE) test	
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testingslow.settings $(MANAGE) syncdb --noinput
+	python $(PWD)/manage.py test	
 run:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testingslow.settings $(MANAGE) runserver
+	python $(PWD)/manage.py runserver
 syncdb:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testingslow.settings $(MANAGE) syncdb --noinput
+	python $(PWD)/manage.py syncdb --no-initial-data --noinput
+	python $(PWD)/manage.py migrate
