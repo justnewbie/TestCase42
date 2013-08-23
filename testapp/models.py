@@ -11,3 +11,12 @@ class Person(models.Model):
 
     def __unicode__(self):
         return '{0} {1}'.format(self.first_name, self.last_name)
+
+
+class RequestLogs(models.Model):
+    url = models.CharField(max_length=500)
+    method = models.CharField(max_length=5)
+    time_stamp = models.DateField()
+
+    def __unicode__(self):
+        return self.http_request

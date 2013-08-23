@@ -2,7 +2,9 @@ import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from models import Person
+from django.test.client import RequestFactory
+from middlewares import RequestSaverMiddleware
+from models import Person, RequestLogs
 
 
 class JsonDataTest(TestCase):
@@ -22,6 +24,12 @@ class ViewsTest(TestCase):
                                     field.value_from_object(
                                         Person.objects.get(pk=1)))
 
+    def test_requests_page(self):
+        response = self.client.get(reverse('http_loggs_list'))
+        self.assertContains(
+            response, '<meta name="description" content="Last requests" />')
+        self.assertContains(response, reverse('http_loggs_list'))
+
 
 class ModelsTest(TestCase):
     def test_models(self):
@@ -30,3 +38,13 @@ class ModelsTest(TestCase):
                b_date=datetime.datetime.now().date(),
                jabber="TombRider@world.m",
                email="TombRider@world.m").save()
+        RequestLogs(url="/hooks/", method='GET',
+                    time_stamp=datetime.datetime.now()).save()
+
+
+class MiddlewareTest(TestCase):
+    def test_hooks_middleware(self):
+        RequestSaverMiddleware().process_request(
+            RequestFactory().get(reverse('http_loggs_list')))
+        self.assertEqual(reverse('http_loggs_list'),
+                         RequestLogs.objects.get(pk=1).url)

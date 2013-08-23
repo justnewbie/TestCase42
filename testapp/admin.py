@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Person
+from models import Person, RequestLogs
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -8,3 +8,10 @@ class PersonAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name')
 
 admin.site.register(Person, PersonAdmin)
+
+
+class RequestLogsAdmin(admin.ModelAdmin):
+    fields = ('url', 'method', 'time_stamp')
+    list_display = ('url',)
+
+admin.site.register(RequestLogs, RequestLogsAdmin)
