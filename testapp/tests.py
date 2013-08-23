@@ -3,10 +3,10 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
+from django.template import RequestContext
 from middlewares import RequestSaverMiddleware
 from models import Person, RequestLogs
 from testingslow import settings
-
 
 class JsonDataTest(TestCase):
     def test_json_data(self):
@@ -16,11 +16,12 @@ class JsonDataTest(TestCase):
 
 class ViewsTest(TestCase):
     def test_main_page(self):
+        response = self.client.get(reverse('main_page'))
         for field in Person._meta.fields:
             if field.name == 'id' or field.name == 'b_date':
                 pass
             else:
-                self.assertContains(self.client.get(reverse('main_page')),
+                self.assertContains(response,
                                     field.value_from_object(
                                         Person.objects.get(pk=1)))
 
@@ -49,9 +50,8 @@ class MiddlewareTest(TestCase):
         self.assertEqual(reverse('http_loggs_list'),
                          RequestLogs.objects.get(pk=1).url)
 
-
 class ContextProcessorTest(TestCase):
     def test_settings_processor(self):
-        self.assertEquals(
-            self.client.get(reverse('main_page')).context['settings'].ROOT_URLCONF,
-            settings.ROOT_URLCONF)
+        self.assertEqual(RequestContext(RequestFactory)['settings'], settings)
+        self.assertTrue('testapp.context_processors.settings_processor'
+                        in settings.TEMPLATE_CONTEXT_PROCESSORS)
