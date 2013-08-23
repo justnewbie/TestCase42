@@ -2,4 +2,4 @@ from testingslow import settings
 
 
 def settings_processor(request):
-    return { 'settings':settings, }
+    return {'settings': settings, }

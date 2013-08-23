@@ -52,4 +52,6 @@ class MiddlewareTest(TestCase):
 
 class ContextProcessorTest(TestCase):
     def test_settings_processor(self):
-        self.assertEquals(self.client.get(reverse('main_page')).context['settings'].ROOT_URLCONF, settings.ROOT_URLCONF)
+        self.assertEquals(
+            self.client.get(reverse('main_page')).context['settings'].ROOT_URLCONF,
+            settings.ROOT_URLCONF)
