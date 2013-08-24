@@ -13,5 +13,5 @@ def about_p(request):
 
 def list_request(request):
     return render_to_response('loggs.html',
-                              {'requests': RequestLogs.objects.all()[:10], },
+                              {'requests': RequestLogs.objects.all()[::-1][:10], },
                               context_instance=RequestContext(request))
