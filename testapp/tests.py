@@ -8,6 +8,7 @@ from middlewares import RequestSaverMiddleware
 from models import Person, RequestLogs
 from testingslow import settings
 
+
 class JsonDataTest(TestCase):
     def test_json_data(self):
         self.assertTrue(User.objects.get(pk=1))
@@ -49,6 +50,7 @@ class MiddlewareTest(TestCase):
             RequestFactory().get(reverse('http_loggs_list')))
         self.assertEqual(reverse('http_loggs_list'),
                          RequestLogs.objects.get(pk=1).url)
+
 
 class ContextProcessorTest(TestCase):
     def test_settings_processor(self):
