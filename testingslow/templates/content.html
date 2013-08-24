@@ -1,0 +1,47 @@
+            <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div class="container-fluid">
+                        <div class="span5">
+                            <p class={{ align }}>Name: {{ data.first_name }}</p>
+                        </div>
+                        <div class="span5">
+                            <p class={{ align }}>Last name: {{ data.last_name }}</p>
+                        </div>
+                        <div class="span5">
+                            <p class={{ align }}>Date of birth: {{ data.b_date }}</p>
+                        </div>
+                        <div class="span5">
+                            {% if data.photography.value %}
+                            <p class={{ align }}>Photography: {{ data.photography }}</p>
+                            <div class="row text-right"><img src="{{ settings.MEDIA_URL }}{{ data.photography.value }}" height="400" width="300"></div>
+                            {% else %}
+                            <p class={{ align }}>Photography:</p>
+                            <p class={{ align }}><img src="{{ settings.MEDIA_URL }}{{ data.photography }}" height="400" width="300"></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="container-fluid">
+                        <div class="span4">
+                            <p>Contacts</p>
+                        </div>
+                        <div class="span4">
+                            <p class={{ align }}>Email: {{ data.email }}</p>
+                        </div>
+                        <div class="span4">
+                            <p class={{ align }}>Jabber: {{ data.jabber }}</p>
+                        </div>
+                        <div class="span4">
+                            <p class="text-left">Bio:</p>
+                            <p class="text-left">{{ data.about }}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>

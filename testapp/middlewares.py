@@ -1,7 +1,10 @@
+import datetime
 from django.http import HttpResponse
-from models import Hook_http
+from models import RequestLogs
 
 
-class HttpHookMiddleware(object):
+class RequestSaverMiddleware(object):
     def process_request(self, request):
-        Hook_http(http_request=request.build_absolute_uri()).save()
+        RequestLogs(url=request.get_full_path(),
+                    method=request.method,
+                    time_stamp=datetime.datetime.now()).save()

@@ -8,22 +8,19 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Person'
-        db.create_table(u'testapp_person', (
+        # Adding model 'RequestLogs'
+        db.create_table(u'testapp_requestlogs', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('b_date', self.gf('django.db.models.fields.DateField')()),
-            ('about', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=50, blank=True)),
-            ('jabber', self.gf('django.db.models.fields.CharField')(max_length=20)),
+            ('url', self.gf('django.db.models.fields.CharField')(max_length=500)),
+            ('method', self.gf('django.db.models.fields.CharField')(max_length=5)),
+            ('time_stamp', self.gf('django.db.models.fields.DateField')()),
         ))
-        db.send_create_signal(u'testapp', ['Person'])
+        db.send_create_signal(u'testapp', ['RequestLogs'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Person'
-        db.delete_table(u'testapp_person')
+        # Deleting model 'RequestLogs'
+        db.delete_table(u'testapp_requestlogs')
 
 
     models = {
@@ -36,6 +33,13 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'jabber': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+        },
+        u'testapp.requestlogs': {
+            'Meta': {'object_name': 'RequestLogs'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'method': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
+            'time_stamp': ('django.db.models.fields.DateField', [], {}),
+            'url': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         }
     }
 
