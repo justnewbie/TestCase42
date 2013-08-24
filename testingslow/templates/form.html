@@ -1,0 +1,6 @@
+    {% csrf_token %}
+    <fieldset>
+        <legend>{{ form_name }}</legend>
+        {{ form.as_p }}
+        <button class="btn btn-middle btn-primary" type="submit">Submit</button>
+    </fieldset>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Last requests{% endblock %}
 {% block head %}<meta name="description" content="Last requests" />{% endblock %}
-{% block main_page %}http://{{ request.get_host }}{% endblock %}
-{% block requests %}{{ request.build_absolute_uri }}{% endblock %}
+{% block manage_person %}{% endblock %}
+{% block login %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="hero-unit">
+        <div class="container-fluid">
+            <div class="span10">
             <p><h3>First 10 http requests</h3></p>
             <table class="table">
                 <thead>
@@ -27,6 +27,6 @@
                 {% endfor %}
                 </tbody>
             </table>
+            </div>
         </div>
-    </div>
 {% endblock %}

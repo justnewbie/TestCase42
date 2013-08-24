@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}<meta name="description" content="Manage Main Page" />{% endblock %}
+{% block title %}Manage my profile{% endblock %}
+{% block manage_person %}{% endblock %}
+{% block content %}
+<form action="{{ request.build_absolute_uri }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <legend>{{ form_name }}</legend>
+        {% with form as data %}
+        {% with align="text-right" %}
+        {% include "content.html" %}
+        {% endwith %}
+        {% endwith %}
+        <div class="container-fluid">
+            <div class="span2">
+                <div class="row text-right"><button class="btn btn-middle btn-primary" type="submit">Submit</button></div>
+            </div>
+        </div>
+    </fieldset>
+    </form>
+{% endblock %}

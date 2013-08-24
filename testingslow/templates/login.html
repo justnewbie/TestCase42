@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Last requests{% endblock %}
+{% block head %}<meta name="description" content="" />{% endblock %}
+{% block manage_person %}{% endblock %}
+{% block content %}
+<form action="{% url 'login_view' %}{{request.get_full_path}}" class="form-horizontal" method="post">
+    {% include "form.html"%}
+</form>
+{% endblock %}
