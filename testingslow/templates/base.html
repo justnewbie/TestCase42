@@ -27,9 +27,11 @@
                             <p>You are logged in...</p>
                             <a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
                         {% else %}
+                            {% block login %}
                             <form action="{% url 'login_view' %}{{request.get_full_path}}" class="form-horizontal" method="post">
                                 {% include "form.html" %}
                             </form>
+                            {% endblock %}
                         {% endif %}
                     </div>
                 </div>
