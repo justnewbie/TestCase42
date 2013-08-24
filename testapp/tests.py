@@ -29,6 +29,8 @@ class ViewsTest(TestCase):
         self.assertContains(
             response, '<meta name="description" content="Last requests" />')
         self.assertContains(response, reverse('http_loggs_list'))
+        for request in RequestLogs.objects.all()[::-1][:10]:
+            self.assertContains(response, request.url)
 
 
 class ModelsTest(TestCase):
