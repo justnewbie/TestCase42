@@ -119,6 +119,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 LOGIN_REDIRECT_URL = '/'
+
 LOGIN_URL = '/'
 
 ROOT_URLCONF = 'testingslow.urls'
