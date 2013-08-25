@@ -60,7 +60,6 @@ class ViewsTest(TestCase):
                                         Person.objects.get(pk=1)))
         self.assertEqual(response.status_code, 200)
         # testing manage view
-        response = self.client.get('/manage/1')
         self.assertEqual(response.status_code, 200)
         with open(settings.MEDIA_ROOT+'/images/test.jpg') as fp:
             contact.update({'photography': fp})
@@ -91,3 +90,16 @@ class ContextProcessorTest(TestCase):
         self.assertEqual(RequestContext(RequestFactory)['settings'], settings)
         self.assertTrue('testapp.context_processors.settings_processor'
                         in settings.TEMPLATE_CONTEXT_PROCESSORS)
+
+
+class DateWidgetTest(TestCase):
+    def test_date_widget(self):
+        self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
+        response = self.client.get(reverse('manage_main_page', args=[1]))
+        self.assertContains(response, """<script>
+            $(function() {
+                var pickerOpts = {
+                    dateFormat: "yy-mm-dd",
+                    showOtherMonths: true}
+                $(".datepicker").datepicker(pickerOpts);
+            });</script>""")

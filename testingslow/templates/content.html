@@ -12,7 +12,7 @@
                             <p class={{ align }}>Last name: {{ data.last_name }}</p>
                         </div>
                         <div class="span5">
-                            <p class={{ align }}>Date of birth: {{ data.b_date }}</p>
+                            <p class={{ align }}>Date of birth: {{ data.b_date|safe }}</p>
                         </div>
                         <div class="span5">
                             {% if data.photography.value %}
