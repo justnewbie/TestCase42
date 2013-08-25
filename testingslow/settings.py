@@ -176,6 +176,6 @@ LOGGING = {
     }
 }
 
-#LOGIN_REDIRECT_URL = reverse('main_page')
+LOGIN_REDIRECT_URL = '/'
 
-#LOGIN_URL = reverse('login_view')
+LOGIN_URL = '/login'
