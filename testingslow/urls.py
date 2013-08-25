@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
-
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
 import settings
 
 admin.autodiscover()
@@ -11,8 +10,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'testingslow.views.home', name='home'),
     # url(r'^testingslow/', include('testingslow.foo.urls')),
     url(r'^manage/([1-9])', 'testapp.views.manage_p', name='manage_main_page'),
-    url(r'^login', 'django.contrib.auth.views.login',
-        {'template_name':'login.html'}, name='login_view'),
+    url(r'^login/', 'django.contrib.auth.views.login',
+        {'template_name': 'login.html'}, name='login_view'),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
                           {'next_page': '/'}, name='logout_view'),
     url(r'^$', 'testapp.views.about_p', name='main_page'),

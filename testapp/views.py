@@ -1,12 +1,14 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from models import Person, RequestLogs
-from django.utils import simplejson
-from django.contrib.auth.forms import AuthenticationForm
-from forms import AddPersonForm
 from django.http import HttpResponse
+from django.utils import simplejson
+
+from models import Person, RequestLogs
+from forms import AddPersonForm
+
 
 
 def about_p(request):

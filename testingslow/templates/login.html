@@ -3,6 +3,7 @@
 {% block head %}<meta name="description" content="" />{% endblock %}
 {% block manage_person %}{% endblock %}
 {% block content %}
+{% block login %}{% endblock %}
 <form action="{% url 'login_view' %}{{request.get_full_path}}" class="form-horizontal" method="post">
     {% include "form.html"%}
 </form>
