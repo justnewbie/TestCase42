@@ -24,7 +24,7 @@
                         <div class="span3 pull-right">
                             {% if user.is_authenticated %}
                                 <p class="text-right">You are logged in...
-                                <a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
+                                {% block link %}{% endblock %}<a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
                                 </p>
                             {% else %}
                                 {% block login %}

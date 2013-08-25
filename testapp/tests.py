@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.test import TestCase
 
 from middlewares import RequestSaverMiddleware
+from templatetags.admin_link import admin_link
 from models import Person, RequestLogs
 from widgets import DatePickerWidget
 from testingslow import settings
@@ -114,3 +115,8 @@ class DateWidgetTest(TestCase):
             });</script>
             <input id="id_test" name="test" class="datepicker" type="text" value="1989-07-07"/>""",
                         DatePickerWidget().render('test', "1989-07-07"))
+
+
+class AdminTagTest(TestCase):
+    def test_admin_tag(self):
+        self.assertEqual(admin_link(User.objects.get(pk=1)), '/admin/auth/user/1/')

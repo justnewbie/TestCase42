@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load admin_link %}
 {% block title %}View - My profile{% endblock %}
 {% block head %}<meta name="description" content="Main Page" />{% endblock %}
+{% block link %}<a href="{% admin_link My %}">admin</a>{% endblock %}
 {% block PK %}{{ My.pk }}{% endblock %}
 {% block content %}
         {% with My as data %}
