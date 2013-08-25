@@ -1,6 +1,6 @@
 # Django settings for testingslow project.
 import os
-
+from django.core.urlresolvers import reverse
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -118,10 +118,6 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-LOGIN_REDIRECT_URL = '/'
-
-LOGIN_URL = '/'
-
 ROOT_URLCONF = 'testingslow.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -179,3 +175,7 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = reverse('main_page')
+
+LOGIN_URL = reverse('login_view')

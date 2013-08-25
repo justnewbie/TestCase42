@@ -19,20 +19,21 @@
         <div class="container">
             <div class="hero-unit">
                 <div class="container-fluid">
-                    <div class="span6">
-                        <h4>42 Coffee Cups Test Assignment</h4>
-                    </div>
-                    <div class="span6 pull-right" style="text-align:right">
-                        {% if user.is_authenticated %}
-                            <p>You are logged in...</p>
-                            <a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
-                        {% else %}
-                            {% block login %}
-                            <form action="{% url 'login_view' %}{{request.get_full_path}}" class="form-horizontal" method="post">
-                                {% include "form.html" %}
-                            </form>
-                            {% endblock %}
-                        {% endif %}
+                    <div class="row">
+                        <div class="span6 pull-left"><h4>42 Coffee Cups Test Assignment</h4></div>
+                        <div class="span3 pull-right">
+                            {% if user.is_authenticated %}
+                                <p class="text-right">You are logged in...
+                                <a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
+                                </p>
+                            {% else %}
+                                {% block login %}
+                                <p class="text-right">
+                                    <a href="{% url 'login_view' %}">Login</a>
+                                </p>
+                                {% endblock %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
         {% block content %}

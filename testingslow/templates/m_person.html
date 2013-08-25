@@ -9,26 +9,33 @@
 {% block content %}
 <form action="{{ request.build_absolute_uri }}" id="myform" class="form-horizontal" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <fieldset>
-        <legend>{{ form_name }}</legend>
         {% with form as data %}
         {% with align="text-right" %}
         {% include "content.html" %}
         {% endwith %}
         {% endwith %}
         <div class="container-fluid">
-            <div class="span2">
-                <div class="row text-right"><button class="btn btn-middle btn-primary" type="submit">Submit</button></div>
+            <div class="row">
+                <div class="span3 text-right">
+                    <button class="btn btn-middle btn-primary" type="submit">Submit</button>
+                    <a class="brand" href="{% url 'main_page' %}">cancel</a>
+                </div>
+                <div class="span4">
+                    <div class="progressC">
+                        <div class="barC"></div >
+                        <div class="percentC">0%</div >
+                    </div>
+                    <div id="statusC"></div>
+                </div>
+            </div>
+            <div class="span10">
+                <hr></hr>
+            </div>
+            <div class="span3 text-right">
+                <a class="brand" href="{% url 'http_loggs_list' %}">Middleware loggs</a>
             </div>
         </div>
-    </fieldset>
     </form>
-
-            <div class="progressC">
-                <div class="barC"></div >
-                <div class="percentC">0%</div >
-            </div>
-            <div id="statusC"></div>
-            <script src="{% get_static_prefix %}jquery.form.js"></script>
-            <script src="{% get_static_prefix %}ajax_upload.js"></script>
+    <script src="{% get_static_prefix %}jquery.form.js"></script>
+    <script src="{% get_static_prefix %}ajax_upload.js"></script>
 {% endblock %}

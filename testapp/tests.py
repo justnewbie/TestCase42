@@ -1,11 +1,13 @@
 import datetime
-from django.test import TestCase
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
+from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.test import TestCase
+
 from middlewares import RequestSaverMiddleware
 from models import Person, RequestLogs
+from widgets import DatePickerWidget
 from testingslow import settings
 
 
@@ -31,12 +33,12 @@ class ViewsTest(TestCase):
                 self.assertContains(response,
                                     field.value_from_object(
                                         Person.objects.get(pk=1)))
-        self.assertContains(response, '<form action="/login/" class="form-horizontal" method="post">')
-        self.assertNotContains(response, '<p>You are logged in...</p>')
+        self.assertContains(response, 'Login')
+        self.assertNotContains(response, 'LogOut')
         self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
         response = self.client.get(reverse('main_page'))
-        self.assertContains(response, '<p>You are logged in...</p>')
-        self.assertNotContains(response, 'Login form')
+        self.assertContains(response, 'LogOut')
+        self.assertNotContains(response, 'Login')
 
     def test_requests_page(self):
         response = self.client.get(reverse('http_loggs_list'))
@@ -61,6 +63,13 @@ class ViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         # testing manage view
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, """<script>
+            $(function() {
+                var pickerOpts = {
+                    dateFormat: "yy-mm-dd",
+                    showOtherMonths: true}
+                $(".datepicker").datepicker(pickerOpts);
+            });</script>""")
         with open(settings.MEDIA_ROOT+'/images/test.jpg') as fp:
             contact.update({'photography': fp})
             response = self.client.post(reverse('manage_main_page', args=[1]), contact)
@@ -96,10 +105,12 @@ class DateWidgetTest(TestCase):
     def test_date_widget(self):
         self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
         response = self.client.get(reverse('manage_main_page', args=[1]))
-        self.assertContains(response, """<script>
+        self.assertTrue("""<script>
             $(function() {
                 var pickerOpts = {
                     dateFormat: "yy-mm-dd",
                     showOtherMonths: true}
                 $(".datepicker").datepicker(pickerOpts);
-            });</script>""")
+            });</script>
+            <input id="id_test" name="test" class="datepicker" type="text" value="1989-07-07"/>""",
+                        DatePickerWidget().render('test', "1989-07-07"))
