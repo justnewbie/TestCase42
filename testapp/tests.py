@@ -139,6 +139,7 @@ class CountCommandTest(TestCase):
 
 class ModelsTest(TestCase):
     def test_signals(self):
+        User.objects.create(pk=5, username='testuser', password='12345')
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Created")
         User.objects.get(pk=1).save()
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Modified")
