@@ -1,4 +1,7 @@
+from StringIO import StringIO
 import datetime
+from django.db.models import get_app, get_models
+from django.core.management import call_command
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -120,3 +123,15 @@ class DateWidgetTest(TestCase):
 class AdminTagTest(TestCase):
     def test_admin_tag(self):
         self.assertEqual(admin_link(User.objects.get(pk=1)), '/admin/auth/user/1/')
+
+
+class CountCommandTest(TestCase):
+    def test_objects_counting(self):
+        data, errors = StringIO(), StringIO()
+        call_command("objectscounting", stdout=data, stderr=errors)
+        for model in get_models(get_app("testapp")):
+            amount = str(model.objects.count())
+            self.assertTrue(amount in data.getvalue() and amount in errors.getvalue()
+                            and "error" in errors.getvalue())
+            model = model._meta.object_name
+            self.assertTrue(model in data.getvalue() and model in errors.getvalue())
