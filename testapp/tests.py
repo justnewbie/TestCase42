@@ -96,8 +96,8 @@ class ModelsTest(TestCase):
 class MiddlewareTest(TestCase):
     def test_hooks_middleware(self):
         RequestSaverMiddleware().process_request(
-            RequestFactory().get(reverse('http_loggs_list')))
-        self.assertEqual(reverse('http_loggs_list'),
+            RequestFactory().get(reverse('http_loggs_list', args=[0])))
+        self.assertEqual(reverse('http_loggs_list', args=[0]),
                          RequestLogs.objects.get(pk=1).url)
 
 
