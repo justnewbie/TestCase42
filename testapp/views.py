@@ -10,16 +10,19 @@ from models import Person, RequestLogs
 from forms import AddPersonForm
 
 
-
 def about_p(request):
     return render_to_response('main_page.html',
                               {'My': Person.objects.get(pk=1), 'form': AuthenticationForm},
                               context_instance=RequestContext(request))
 
 
-def list_request(request):
+def list_request(request, url):
+    if int(url) == 0:
+        requests = RequestLogs.objects.all()[::-1][:10]
+    else:
+        requests = RequestLogs.objects.all()[:10]
     return render_to_response('loggs.html',
-                              {'requests': RequestLogs.objects.all()[::-1][:10], },
+                              {'requests': requests, },
                               context_instance=RequestContext(request))
 
 

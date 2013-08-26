@@ -17,6 +17,7 @@ class RequestLogsAdmin(admin.ModelAdmin):
 
 admin.site.register(RequestLogs, RequestLogsAdmin)
 
+
 class LoggsAdmin(admin.ModelAdmin):
     fields = ('action', 'date', 'table',)
     list_display = ('action', 'date', 'table',)

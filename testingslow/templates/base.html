@@ -12,7 +12,7 @@
                 <div class="container">
                     <a class="brand" href="{% url 'main_page' %}">My Profile</a>
                     {% block manage_person %}<a class="brand" href="{% url 'manage_main_page' My.pk %}">Manage profile</a>{% endblock %}
-                    <a class="brand" href="{% url 'http_loggs_list' %}">Middleware loggs</a>
+                    <a class="brand" href="{% url 'http_loggs_list' 0 %}">Middleware loggs</a>
                 </div>
             </div>
         </div>
