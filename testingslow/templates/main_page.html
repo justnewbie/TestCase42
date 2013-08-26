@@ -2,70 +2,20 @@
 {% load admin_link %}
 {% block title %}View - My profile{% endblock %}
 {% block head %}<meta name="description" content="Main Page" />{% endblock %}
+{% block link %}<a href="{% admin_link My %}">admin</a>{% endblock %}
 {% block PK %}{{ My.pk }}{% endblock %}
 {% block content %}
-<div class="container">
-    <div class="hero-unit">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Profile</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div>
-                        <img height="400" src="{{ settings.MEDIA_URL }}{{ My.photography }}" width="300" />
-                    </div>
-                </td>
-                <td>
-                    <div class="container-fluid">
-                        <div class="span7">
-                            <h3>First name</h3>
-                            <p>{{ My.first_name }}</p>
-                        </div>
-                        <div class="span7">
-                            <h4>Last name</h4>
-                            <p>{{ My.last_name }}</p>
-                        </div>
-                        <div class="span7">
-                            <h4>Birth date</h4>
-                            <p>{{ My.b_date }}</p>
-                        </div>
-                        <div class="span7">
-                            <h4>About me</h4>
-                            <p>{{ My.about }}</p>
-                        </div>
-                        <div class="span7">
-                            <h4>Jabber</h4>
-                            <p>{{ My.jabber }}</p>
-                        </div>
-                        <div class="span7">
-                            <h4>Jabber</h4>
-                            <p>{{ My.email }}</p>
-                        </div>
-                        {% if user.is_authenticated %}
-                        <div class="span7">
-                            <h4>Admin page link</h4>
-                            <p><a href='{% admin_link My %}'>Link to edit profile in admin page "{{ My.first_name }}"</a></p>
-                        </div>
-                        {% endif %}
-                        <div class="span7">
-                            <h4>template-context-processor</h4>
-                            <p>{{ settings }}</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        {% if user.is_authenticated %}
-            <p>You are logged in...</p>
-            <a href='/loggout/'><button class="btn btn-large btn-primary" type="submit">LogOut</button></a>
-        {% else %}
-            {% include "form.html" with url="/login/" form_name="Login form" form_button="login" encrypte=''%}
-        {% endif %}
-    </div>
-</div>
+        {% with My as data %}
+        {% with align="text-left" %}
+        {% include "content.html" %}
+        {% endwith %}
+        {% endwith %}
+        <div class="container-fluid">
+            <div class="span10">
+                <hr></hr>
+            </div>
+            <div class="span4">
+                <p><a class="brand" href="{% url 'http_loggs_list' %}">Middleware loggs</a></p>
+            </div>
+        </div>
 {% endblock %}

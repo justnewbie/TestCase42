@@ -1,16 +1,32 @@
 {% extends 'base.html' %}
 {% block title %}Last requests{% endblock %}
 {% block head %}<meta name="description" content="Last requests" />{% endblock %}
-{% block main_page %}http://{{ request.get_host }}{% endblock %}
 {% block manage_person %}{% endblock %}
-{% block hooks %}{{ request.build_absolute_uri }}{% endblock %}
+{% block login %}{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="hero-unit">
+        <div class="container-fluid">
+            <div class="span10">
             <p><h3>First 10 http requests</h3></p>
-            {% for hook in hooks %}
-                <p>{{ hook.pk }}-{{ hook.http_request }}</p>
-            {% endfor %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>URL</th>
+                        <th>Method</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for request in requests %}
+                    <tr>
+                        <td>{{ request.pk }}</td>
+                        <td>{{ request.url }}</td>
+                        <td>{{ request.method }}</td>
+                        <td>{{ request.time_stamp }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
         </div>
-    </div>
 {% endblock %}

@@ -10,13 +10,35 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="{% block main_page %}#{% endblock %}">My Profile</a>
-                    {% block manage_person %}<a class="brand" href="{% block manage_url %}manage/?person={% block PK %}{% endblock %}{% endblock %}">Manage profile</a>{% endblock %}
-                    <a class="brand" href="{% block hooks %}hooks/{% endblock %}">Middleware loggs</a>
+                    <a class="brand" href="{% url 'main_page' %}">My Profile</a>
+                    {% block manage_person %}<a class="brand" href="{% url 'manage_main_page' My.pk %}">Manage profile</a>{% endblock %}
+                    <a class="brand" href="{% url 'http_loggs_list' %}">Middleware loggs</a>
                 </div>
             </div>
         </div>
+        <div class="container">
+            <div class="hero-unit">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="span6 pull-left"><h4>42 Coffee Cups Test Assignment</h4></div>
+                        <div class="span3 pull-right">
+                            {% if user.is_authenticated %}
+                                <p class="text-right">You are logged in...
+                                {% block link %}{% endblock %}<a href='{% url "logout_view" %}'><button class="btn btn-middle btn-primary" type="submit">LogOut</button></a>
+                                </p>
+                            {% else %}
+                                {% block login %}
+                                <p class="text-right">
+                                    <a href="{% url 'login_view' %}">Login</a>
+                                </p>
+                                {% endblock %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
         {% block content %}
         {% endblock %}
+            </div>
+        </div>
     </body>
 </html>
