@@ -7,8 +7,11 @@
         <div class="container-fluid">
             <div class="span10">
             <p><h3>First 10 http requests</h3></p>
-            <a href='{% url "http_loggs_list" 0 %}'><button class="btn btn-middle btn-primary" type="submit">POST requests</button></a>
-            <a href='{% url "http_loggs_list" 1 %}'><button class="btn btn-middle btn-primary" type="submit">GET requests</button></a>
+            <select class="selectpicker" onchange="if (this.value) window.location.href=this.value">
+                <option selected="selected"></option>
+                <option value="{% url 'http_loggs_list' 0 %}">POST requests</option>
+                <option value='{% url "http_loggs_list" 1 %}'>GET requests</option>
+            </select>
             <table class="table">
                 <thead>
                     <tr>
