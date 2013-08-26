@@ -1,17 +1,14 @@
 from django import forms
-from models import Person
-from django.forms import ModelForm
+
 from widgets import DatePickerWidget
+from models import Person
 
 
-class AuthForm(forms.Form):
-    username = forms.CharField(max_length=100)
-    password = forms.CharField(max_length=100, widget=forms.PasswordInput)
-
-
-class Add_Person(ModelForm):
+class AddPersonForm(forms.ModelForm):
     b_date = forms.DateField(widget=DatePickerWidget())
+    about = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Person
-        fields = ('first_name', 'last_name', 'b_date', 'about', 'email', 'jabber', 'photography')
+        fields = ('first_name', 'last_name', 'b_date',
+                  'photography', 'email', 'jabber', 'about', )
