@@ -18,9 +18,9 @@ def about_p(request):
 
 def list_request(request, url):
     if int(url) == 0:
-        requests = RequestLogs.objects.all()[::-1][:10]
+        requests = RequestLogs.objects.filter(method='POST')[::-1][:10]
     else:
-        requests = RequestLogs.objects.all()[:10]
+        requests = RequestLogs.objects.filter(method='GET')[::-1][:10]
     return render_to_response('loggs.html',
                               {'requests': requests, },
                               context_instance=RequestContext(request))

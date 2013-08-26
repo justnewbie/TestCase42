@@ -48,11 +48,10 @@ class ViewsTest(TestCase):
         response = self.client.get(reverse('http_loggs_list', args=[0]))
         self.assertContains(
             response, '<meta name="description" content="Last requests" />')
-        self.assertContains(response, reverse('http_loggs_list', args=[0]))
-        for request in RequestLogs.objects.all()[::-1][:10]:
+        for request in RequestLogs.objects.filter(method='POST')[::-1][:10]:
             self.assertContains(response, request.url)
         response = self.client.get(reverse('http_loggs_list', args=[1]))
-        for request in RequestLogs.objects.all()[:10]:
+        for request in RequestLogs.objects.filter(method='GET')[::-1][:10]:
             self.assertContains(response, request.url)
 
     def test_manage_page(self):
