@@ -10,7 +10,7 @@ from django.test import TestCase
 
 from middlewares import RequestSaverMiddleware
 from templatetags.admin_link import admin_link
-from models import Person, RequestLogs
+from models import Person, RequestLogs, Loggs
 from widgets import DatePickerWidget
 from testingslow import settings
 
@@ -135,3 +135,13 @@ class CountCommandTest(TestCase):
                             and "error" in errors.getvalue())
             model = model._meta.object_name
             self.assertTrue(model in data.getvalue() and model in errors.getvalue())
+
+
+class ModelsTest(TestCase):
+    def test_signals(self):
+        User.objects.create(pk=5, username='testuser', password='12345')
+        self.assertEquals(str(Loggs.objects.latest('pk')), "User Created")
+        User.objects.get(pk=1).save()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "User Modified")
+        User.objects.get(pk=1).delete()
+        self.assertEquals(str(Loggs.objects.latest('pk')), "User Delete")

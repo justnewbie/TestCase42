@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import Person, RequestLogs
+from models import Person, RequestLogs, Loggs
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -16,3 +16,9 @@ class RequestLogsAdmin(admin.ModelAdmin):
     list_display = ('url',)
 
 admin.site.register(RequestLogs, RequestLogsAdmin)
+
+class LoggsAdmin(admin.ModelAdmin):
+    fields = ('action', 'date', 'table',)
+    list_display = ('action', 'date', 'table',)
+
+admin.site.register(Loggs, LoggsAdmin)
