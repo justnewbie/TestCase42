@@ -1,5 +1,7 @@
 from StringIO import StringIO
 import datetime
+import sys
+
 from django.db.models import get_app, get_models
 from django.core.management import call_command
 from django.test.client import RequestFactory
@@ -20,11 +22,14 @@ contact = {'first_name': 'Lara', 'last_name': 'Croft',
            'about': 'I am the tomb rider', 'jabber':
            'L_Croft', 'email': 'Croft@i.ua', }
 
+default_user = User.objects.all()[:1].get()
+default_person = Person.objects.all()[:1].get()
+
 
 class JsonDataTest(TestCase):
     def test_json_data(self):
-        self.assertTrue(User.objects.get(pk=1))
-        self.assertTrue(Person.objects.get(pk=1))
+        self.assertTrue(default_user)
+        self.assertTrue(default_person)
 
 
 class ViewsTest(TestCase):
@@ -36,7 +41,7 @@ class ViewsTest(TestCase):
             else:
                 self.assertContains(response,
                                     field.value_from_object(
-                                        Person.objects.get(pk=1)))
+                                        default_person))
         self.assertContains(response, 'Login')
         self.assertNotContains(response, 'LogOut')
         self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
@@ -48,11 +53,12 @@ class ViewsTest(TestCase):
         response = self.client.get(reverse('http_loggs_list', args=[0]))
         self.assertContains(
             response, '<meta name="description" content="Last requests" />')
-        for request in RequestLogs.objects.filter(method='POST')[::-1][:10]:
-            self.assertContains(response, request.url)
+        for request in RequestLogs.objects.filter(method='POST')[:10]:
+            self.assertNotContains(response, request.url)
         response = self.client.get(reverse('http_loggs_list', args=[1]))
-        for request in RequestLogs.objects.filter(method='GET')[::-1][:10]:
+        for request in RequestLogs.objects.filter(method='GET')[:10]:
             self.assertContains(response, request.url)
+
 
     def test_manage_page(self):
         # testing login required
@@ -65,7 +71,7 @@ class ViewsTest(TestCase):
             else:
                 self.assertContains(response,
                                     field.value_from_object(
-                                        Person.objects.get(pk=1)))
+                                        default_person))
         self.assertEqual(response.status_code, 200)
         # testing manage view
         self.assertEqual(response.status_code, 200)
@@ -97,7 +103,7 @@ class MiddlewareTest(TestCase):
         RequestSaverMiddleware().process_request(
             RequestFactory().get(reverse('http_loggs_list', args=[0])))
         self.assertEqual(reverse('http_loggs_list', args=[0]),
-                         RequestLogs.objects.get(pk=1).url)
+                         RequestLogs.objects.latest('pk').url)
 
 
 class ContextProcessorTest(TestCase):
@@ -109,8 +115,6 @@ class ContextProcessorTest(TestCase):
 
 class DateWidgetTest(TestCase):
     def test_date_widget(self):
-        self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
-        response = self.client.get(reverse('manage_main_page', args=[1]))
         self.assertTrue("""<script>
             $(function() {
                 var pickerOpts = {
@@ -124,7 +128,7 @@ class DateWidgetTest(TestCase):
 
 class AdminTagTest(TestCase):
     def test_admin_tag(self):
-        self.assertEqual(admin_link(User.objects.get(pk=1)), '/admin/auth/user/1/')
+        self.assertEqual(admin_link(default_user), '/admin/auth/user/1/')
 
 
 class CountCommandTest(TestCase):
@@ -137,13 +141,15 @@ class CountCommandTest(TestCase):
                             and "error" in errors.getvalue())
             model = model._meta.object_name
             self.assertTrue(model in data.getvalue() and model in errors.getvalue())
+        sys.stdout.write(data.getvalue() + '\n')
+        sys.stderr.write(errors.getvalue() + '\n')
 
 
 class ModelsTest(TestCase):
     def test_signals(self):
-        User.objects.create(pk=5, username='testuser', password='12345')
+        User.objects.create(username='testuser', password='12345')
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Created")
-        User.objects.get(pk=1).save()
+        default_user.save()
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Modified")
-        User.objects.get(pk=1).delete()
+        default_user.delete()
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Delete")

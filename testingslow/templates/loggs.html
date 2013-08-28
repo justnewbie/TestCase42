@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Last requests{% endblock %}
 {% block head %}<meta name="description" content="Last requests" />{% endblock %}
 {% block manage_person %}{% endblock %}
 {% block login %}{% endblock %}
 {% block content %}
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('select').change(function() {
+                    if (this.value) window.location.href=this.value});
+                for (i = 0; i < $('select')[0].length; i++) {
+                    if ($('select')[0][i].value == window.location.pathname) {
+
+                        $("#"+$('select')[0][i].id).attr("selected","selected");
+                    }
+                }
+            });
+        </script>
         <div class="container-fluid">
             <div class="span10">
             <p><h3>First 10 http requests</h3></p>
-            <select class="selectpicker" onchange="if (this.value) window.location.href=this.value">
-                <option selected="selected"></option>
-                <option value="{% url 'http_loggs_list' 0 %}">POST requests</option>
-                <option value='{% url "http_loggs_list" 1 %}'>GET requests</option>
-            </select>
+                     <select>
+                         <option id="1" value="{% url 'http_loggs_list' 0 %}">POST requests</option>
+                         <option id="2" value='{% url "http_loggs_list" 1 %}'>GET requests</option>
+                     </select>
             <table class="table">
                 <thead>
                     <tr>
