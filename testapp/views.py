@@ -10,7 +10,6 @@ from models import Person, RequestLogs
 from forms import AddPersonForm
 
 
-
 def about_p(request):
     return render_to_response('main_page.html',
                               {'My': Person.objects.all()[:1].get(), 'form': AuthenticationForm},

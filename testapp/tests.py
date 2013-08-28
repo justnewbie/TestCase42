@@ -22,14 +22,11 @@ contact = {'first_name': 'Lara', 'last_name': 'Croft',
            'about': 'I am the tomb rider', 'jabber':
            'L_Croft', 'email': 'Croft@i.ua', }
 
-default_user = User.objects.all()[:1].get()
-default_person = Person.objects.all()[:1].get()
-
 
 class JsonDataTest(TestCase):
     def test_json_data(self):
-        self.assertTrue(default_user)
-        self.assertTrue(default_person)
+        self.assertTrue(User.objects.all()[:1].get())
+        self.assertTrue(Person.objects.all()[:1].get())
 
 
 class ViewsTest(TestCase):
@@ -41,7 +38,7 @@ class ViewsTest(TestCase):
             else:
                 self.assertContains(response,
                                     field.value_from_object(
-                                        default_person))
+                                        Person.objects.all()[:1].get()))
         self.assertContains(response, 'Login')
         self.assertNotContains(response, 'LogOut')
         self.client.post(reverse('login_view'), {'username': 'admin', 'password': 'admin'})
@@ -59,7 +56,6 @@ class ViewsTest(TestCase):
         for request in RequestLogs.objects.filter(method='GET')[:10]:
             self.assertContains(response, request.url)
 
-
     def test_manage_page(self):
         # testing login required
         self.assertEqual(self.client.get(reverse('manage_main_page', args=[1])).status_code, 302)
@@ -71,7 +67,7 @@ class ViewsTest(TestCase):
             else:
                 self.assertContains(response,
                                     field.value_from_object(
-                                        default_person))
+                                        Person.objects.all()[:1].get()))
         self.assertEqual(response.status_code, 200)
         # testing manage view
         self.assertEqual(response.status_code, 200)
@@ -128,7 +124,7 @@ class DateWidgetTest(TestCase):
 
 class AdminTagTest(TestCase):
     def test_admin_tag(self):
-        self.assertEqual(admin_link(default_user), '/admin/auth/user/1/')
+        self.assertEqual(admin_link(User.objects.all()[:1].get()), '/admin/auth/user/1/')
 
 
 class CountCommandTest(TestCase):
@@ -149,6 +145,7 @@ class ModelsTest(TestCase):
     def test_signals(self):
         User.objects.create(username='testuser', password='12345')
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Created")
+        default_user = User.objects.all()[:1].get()
         default_user.save()
         self.assertEquals(str(Loggs.objects.latest('pk')), "User Modified")
         default_user.delete()
